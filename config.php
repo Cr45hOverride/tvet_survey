@@ -1,0 +1,75 @@
+<?php
+/**
+ * Database Configuration for XAMPP MySQL
+ * System: Survey IPT Dynamic Dropdown System
+ */
+
+define('DB_HOST', 'localhost');
+define('DB_NAME', 'survey_ipt');
+define('DB_USER', 'root');
+define('DB_PASS', '');
+
+
+define('DB_CHARSET', 'utf8mb4');
+
+function getDBConnection() {
+    static $pdo = null;
+    if ($pdo === null) {
+        $dsn = "mysql:host=" . DB_HOST . ";dbname=" . DB_NAME . ";charset=" . DB_CHARSET;
+        $options = [
+            PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
+            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+            PDO::ATTR_EMULATE_PREPARES   => false,
+        ];
+
+        try {
+            $pdo = new PDO($dsn, DB_USER, DB_PASS, $options);
+            // Ensure compatibility across live MySQL/MariaDB servers by disabling ONLY_FULL_GROUP_BY for the session
+            $pdo->exec("SET SESSION sql_mode = (SELECT REPLACE(REPLACE(@@SESSION.sql_mode, 'ONLY_FULL_GROUP_BY,', ''), ',ONLY_FULL_GROUP_BY', ''))");
+        } catch (PDOException $e) {
+            // Return JSON error if it's an API request or display styled HTML error
+            if (isset($_GET['action']) || (isset($_SERVER['HTTP_ACCEPT']) && strpos($_SERVER['HTTP_ACCEPT'], 'application/json') !== false)) {
+                header('Content-Type: application/json');
+                echo json_encode([
+                    'status' => 'error',
+                    'message' => 'Database connection failed: ' . $e->getMessage() . '. Please ensure MySQL is running in XAMPP and "survey_ipt" database is imported.'
+                ]);
+                exit;
+            } else {
+                die('<div style="padding:20px; font-family:sans-serif; color:#721c24; background:#f8d7da; border:1px solid #f5c6cb; border-radius:8px; margin:20px;">
+                    <h3>Database Connection Error</h3>
+                    <p>' . htmlspecialchars($e->getMessage()) . '</p>
+                    <hr>
+                    <p><strong>Instructions:</strong> Please make sure MySQL is started in XAMPP Control Panel and run the <code>database.sql</code> script in phpMyAdmin.</p>
+                </div>');
+            }
+        }
+    }
+    return $pdo;
+}
+
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
+function isLoggedIn() {
+    return isset($_SESSION['admin_user']);
+}
+
+function getCurrentUser() {
+    return $_SESSION['admin_user'] ?? null;
+}
+
+function requireLogin() {
+    if (!isLoggedIn()) {
+        if (isset($_GET['action']) || (isset($_SERVER['HTTP_ACCEPT']) && strpos($_SERVER['HTTP_ACCEPT'], 'application/json') !== false)) {
+            header('Content-Type: application/json');
+            echo json_encode(['status' => 'error', 'message' => 'Sesi telah tamat. Sila log masuk semula.']);
+            exit;
+        } else {
+            header('Location: login.php');
+            exit;
+        }
+    }
+}
+?>
