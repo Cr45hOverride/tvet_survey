@@ -5,21 +5,33 @@
  */
 
 define('DB_HOST', 'localhost');
+
 define('DB_NAME', 'survey_ipt');
 define('DB_USER', 'root');
 define('DB_PASS', '');
 
+//define('DB_NAME', 'kismec_survey_ipt');
+//define('DB_USER', 'kismec_survey_ipt');
+//define('DB_PASS', 'kismec_survey_ipt');
+
 
 define('DB_CHARSET', 'utf8mb4');
 
-function getDBConnection() {
+/**
+ * Konfigurasi Google Gemini AI
+ */
+define('GEMINI_API_KEY', 'YOUR_API_KEY'); // Masukkan Gemini API Key anda di sini
+define('GEMINI_MODEL', 'gemini-3.6-flash'); // Google Gemini 3.6 Flash
+
+function getDBConnection()
+{
     static $pdo = null;
     if ($pdo === null) {
         $dsn = "mysql:host=" . DB_HOST . ";dbname=" . DB_NAME . ";charset=" . DB_CHARSET;
         $options = [
-            PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
+            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
             PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-            PDO::ATTR_EMULATE_PREPARES   => false,
+            PDO::ATTR_EMULATE_PREPARES => false,
         ];
 
         try {
@@ -52,15 +64,18 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-function isLoggedIn() {
+function isLoggedIn()
+{
     return isset($_SESSION['admin_user']);
 }
 
-function getCurrentUser() {
+function getCurrentUser()
+{
     return $_SESSION['admin_user'] ?? null;
 }
 
-function requireLogin() {
+function requireLogin()
+{
     if (!isLoggedIn()) {
         if (isset($_GET['action']) || (isset($_SERVER['HTTP_ACCEPT']) && strpos($_SERVER['HTTP_ACCEPT'], 'application/json') !== false)) {
             header('Content-Type: application/json');

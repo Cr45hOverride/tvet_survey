@@ -295,6 +295,36 @@ $courses = $db->query("SELECT id, institute_id, course_name, qualification_level
             box-shadow: 0 4px 12px rgba(56, 189, 248, 0.4);
         }
 
+        .btn-analisa-ai {
+            background: linear-gradient(135deg, #a855f7 0%, #6366f1 100%);
+            color: #ffffff;
+            border: 1px solid rgba(168, 85, 247, 0.45);
+            padding: 0.5rem 1.1rem;
+            border-radius: 10px;
+            font-size: 0.84rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            box-shadow: 0 4px 15px rgba(168, 85, 247, 0.35);
+        }
+
+        .btn-analisa-ai:hover:not(:disabled) {
+            background: linear-gradient(135deg, #9333ea 0%, #4f46e5 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(168, 85, 247, 0.5);
+            color: #ffffff;
+        }
+
+        .btn-analisa-ai:disabled {
+            opacity: 0.45;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
         @media print {
 
             .navbar,
@@ -519,14 +549,31 @@ $courses = $db->query("SELECT id, institute_id, course_name, qualification_level
                 <!-- Acquired Soft Skills -->
                 <div>
                     <div
-                        style="font-size: 0.88rem; font-weight: 700; color: #c084fc; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.4rem;">
-                        <i class="fa-solid fa-users-gear"></i> Kemahiran Insaniah yang Dimiliki (<span
-                            id="dispCountSoft">0</span>)
+                        style="font-size: 0.88rem; font-weight: 700; color: #c084fc; margin-bottom: 0.5rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem;">
+                        <span style="display: flex; align-items: center; gap: 0.4rem;">
+                            <i class="fa-solid fa-users-gear"></i> Kemahiran Insaniah yang Dimiliki (<span
+                                id="dispCountSoft">0</span>)
+                        </span>
                     </div>
-                    <div id="dispSoftSkillsWrapper" style="display: flex; flex-wrap: wrap; gap: 0.4rem;"></div>
+                    <div id="dispSoftSkillsWrapper" style="display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 0.85rem;"></div>
+                    <div>
+                        <button type="button" id="btnAnalisaAi" class="btn-analisa-ai" title="Jana Analisa AI bagi responden ini">
+                            <i class="fa-solid fa-wand-magic-sparkles"></i> Analisa AI (Kesesuaian Industri)
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
+
+        <!-- Form Tersembunyi Penghantaran Data ke analisa_ai.php -->
+        <form id="formToAnalisaAi" method="POST" action="analisa_ai.php" style="display: none;">
+            <input type="hidden" name="nama_institusi" id="aiInputInstitusi">
+            <input type="hidden" name="nama_kursus" id="aiInputKursus">
+            <input type="hidden" name="tahap_kelayakan" id="aiInputTahap">
+            <input type="hidden" name="kemahiran_teknikal" id="aiInputTech">
+            <input type="hidden" name="kemahiran_insaniah" id="aiInputSoft">
+            <input type="hidden" name="nama_responden" id="aiInputResponden">
+        </form>
 
         <!-- EXECUTIVE KPI SUMMARY CARDS -->
         <div class="stats-grid">
@@ -774,6 +821,35 @@ $courses = $db->query("SELECT id, institute_id, course_name, qualification_level
                 });
             }
 
+            // AI Analysis Button Handler
+            const btnAnalisaAi = document.getElementById('btnAnalisaAi');
+            if (btnAnalisaAi) {
+                btnAnalisaAi.addEventListener('click', () => {
+                    const resp = getSelectedRespondent();
+                    if (!resp) {
+                        alert('Sila pilih responden terlebih dahulu dalam senarai tapisan.');
+                        return;
+                    }
+
+                    const techSkillsStr = (resp.tech_skills && resp.tech_skills.length > 0)
+                        ? resp.tech_skills.join(', ')
+                        : 'Tiada kemahiran teknikal direkodkan';
+
+                    const softSkillsStr = (resp.soft_skills && resp.soft_skills.length > 0)
+                        ? resp.soft_skills.join(', ')
+                        : 'Tiada kemahiran insaniah direkodkan';
+
+                    document.getElementById('aiInputInstitusi').value = resp.institute_name || '';
+                    document.getElementById('aiInputKursus').value = resp.course_name || '';
+                    document.getElementById('aiInputTahap').value = resp.qualification_level || '';
+                    document.getElementById('aiInputTech').value = techSkillsStr;
+                    document.getElementById('aiInputSoft').value = softSkillsStr;
+                    document.getElementById('aiInputResponden').value = resp.respondent_name || '';
+
+                    document.getElementById('formToAnalisaAi').submit();
+                });
+            }
+
             // Filter inputs for mapped jobs
             document.getElementById('mapSearchInput').addEventListener('input', filterMappedCards);
             document.getElementById('mapFilterTier').addEventListener('change', filterMappedCards);
@@ -885,6 +961,8 @@ $courses = $db->query("SELECT id, institute_id, course_name, qualification_level
                 document.getElementById('dispCountSoft').textContent = '0';
                 document.getElementById('dispTechSkillsWrapper').innerHTML = '<small style="color:var(--text-muted);">-</small>';
                 document.getElementById('dispSoftSkillsWrapper').innerHTML = '<small style="color:var(--text-muted);">-</small>';
+                const btnAi = document.getElementById('btnAnalisaAi');
+                if (btnAi) btnAi.disabled = true;
                 mappedJobsContainer.innerHTML = '<div style="text-align:center; padding:3rem; color:var(--text-muted);">Sila pilih responden untuk melihat pemetaan jawatan industri.</div>';
                 deepDiveBox.innerHTML = '<div style="text-align:center; padding:3rem; color:var(--text-muted);">Sila pilih responden untuk memulakan analisis jurang.</div>';
             }
@@ -895,6 +973,9 @@ $courses = $db->query("SELECT id, institute_id, course_name, qualification_level
                     showEmptyRespondentState();
                     return;
                 }
+
+                const btnAi = document.getElementById('btnAnalisaAi');
+                if (btnAi) btnAi.disabled = false;
 
                 // 1. Populate Respondent Detail Card
                 document.getElementById('dispRespHeaderNameVal').textContent = resp.respondent_name;

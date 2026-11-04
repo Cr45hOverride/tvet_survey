@@ -597,13 +597,13 @@ try {
                     (SELECT COUNT(*) FROM survey_submissions) as total_submissions,
                     (SELECT COUNT(*) FROM temp_institutes) as total_temp_institutes,
                     (SELECT COUNT(*) FROM temp_institutes WHERE status = 'KIV') as total_temp_kiv,
-                    (SELECT COUNT(*) FROM temp_institutes WHERE status = 'Approve') as total_temp_approve,
+                    (SELECT COUNT(*) FROM temp_institutes WHERE status IN ('Approve', 'Approved')) as total_temp_approve,
                     (SELECT COUNT(*) FROM temp_courses) as total_temp_courses,
                     (SELECT COUNT(*) FROM temp_courses WHERE status = 'KIV') as total_temp_courses_kiv,
-                    (SELECT COUNT(*) FROM temp_courses WHERE status = 'Approve') as total_temp_courses_approve,
+                    (SELECT COUNT(*) FROM temp_courses WHERE status IN ('Approve', 'Approved')) as total_temp_courses_approve,
                     (SELECT COUNT(*) FROM temp_skills) as total_temp_skills,
                     (SELECT COUNT(*) FROM temp_skills WHERE status = 'KIV') as total_temp_skills_kiv,
-                    (SELECT COUNT(*) FROM temp_skills WHERE status = 'Approve') as total_temp_skills_approve
+                    (SELECT COUNT(*) FROM temp_skills WHERE status IN ('Approve', 'Approved')) as total_temp_skills_approve
             ")->fetch();
             echo json_encode(['status' => 'success', 'data' => $stats]);
             break;
@@ -916,9 +916,9 @@ try {
 
             $sql = "
                 SELECT t.id, t.state_id, t.institute_name, t.status, t.created_at,
-                       s.state_name
+                       COALESCE(s.state_name, 'Tidak Diketahui') as state_name
                 FROM temp_institutes t
-                JOIN states s ON t.state_id = s.id
+                LEFT JOIN states s ON t.state_id = s.id
                 WHERE 1=1
             ";
             $params = [];
@@ -928,8 +928,12 @@ try {
                 $params['sid'] = $state_filter;
             }
             if (!empty($status_filter) && $status_filter !== 'all') {
-                $sql .= " AND t.status = :st";
-                $params['st'] = $status_filter;
+                if (in_array($status_filter, ['Approve', 'Approved'])) {
+                    $sql .= " AND t.status IN ('Approve', 'Approved')";
+                } else {
+                    $sql .= " AND t.status = :st";
+                    $params['st'] = $status_filter;
+                }
             }
             if (!empty($search)) {
                 $sql .= " AND (t.institute_name LIKE :search OR s.state_name LIKE :search)";
@@ -947,6 +951,7 @@ try {
             requireLogin();
             $id = (int)($_POST['id'] ?? 0);
             $status = trim($_POST['status'] ?? '');
+            if (strcasecmp($status, 'Approved') === 0) $status = 'Approve';
 
             if ($id <= 0 || !in_array($status, ['KIV', 'Approve'])) {
                 echo json_encode(['status' => 'error', 'message' => 'Status tidak sah. Nilai yang sah adalah "KIV" atau "Approve".']);
@@ -967,6 +972,7 @@ try {
             $state_id = (int)($_POST['state_id'] ?? 0);
             $name = trim($_POST['institute_name'] ?? '');
             $status = trim($_POST['status'] ?? 'KIV');
+            if (strcasecmp($status, 'Approved') === 0) $status = 'Approve';
 
             if ($id <= 0 || $state_id <= 0 || empty($name) || !in_array($status, ['KIV', 'Approve'])) {
                 echo json_encode(['status' => 'error', 'message' => 'Sila lengkapkan semua maklumat dan pastikan status sah.']);
@@ -997,18 +1003,18 @@ try {
             $target_id = (int)($_POST['id'] ?? 0);
 
             if ($target_id > 0) {
-                $stmt = $db->prepare("SELECT * FROM temp_institutes WHERE id = :id AND status = 'Approve'");
+                $stmt = $db->prepare("SELECT * FROM temp_institutes WHERE id = :id AND status IN ('Approve', 'Approved')");
                 $stmt->execute(['id' => $target_id]);
                 $items = $stmt->fetchAll();
             } else {
-                $stmt = $db->query("SELECT * FROM temp_institutes WHERE status = 'Approve' ORDER BY id ASC");
+                $stmt = $db->query("SELECT * FROM temp_institutes WHERE status IN ('Approve', 'Approved') ORDER BY id ASC");
                 $items = $stmt->fetchAll();
             }
 
             if (empty($items)) {
                 echo json_encode([
                     'status' => 'error',
-                    'message' => 'Tiada rekod institusi dengan status "Approve" untuk dipindahkan. Sila semak senarai dan ubah status kepada "Approve" terlebih dahulu sebelum menekan butang Update Institure.'
+                    'message' => 'Tiada rekod institusi dengan status "Approve" atau "Approved" untuk dipindahkan. Sila semak senarai dan ubah status kepada "Approve" terlebih dahulu sebelum menekan butang Update Institure.'
                 ]);
                 exit;
             }
@@ -1178,6 +1184,7 @@ try {
             requireLogin();
             $id = (int)($_POST['id'] ?? 0);
             $status = trim($_POST['status'] ?? '');
+            if (strcasecmp($status, 'Approved') === 0) $status = 'Approve';
 
             if ($id <= 0 || !in_array($status, ['KIV', 'Approve'])) {
                 echo json_encode(['status' => 'error', 'message' => 'Status tidak sah. Nilai yang sah adalah "KIV" atau "Approve".']);
@@ -1200,6 +1207,7 @@ try {
             $campus_branch = trim($_POST['campus_branch'] ?? 'Kampus Utama');
             $qualification_level = trim($_POST['qualification_level'] ?? 'Diploma');
             $status = trim($_POST['status'] ?? 'KIV');
+            if (strcasecmp($status, 'Approved') === 0) $status = 'Approve';
 
             if ($id <= 0 || $institute_id <= 0 || empty($course_name) || !in_array($status, ['KIV', 'Approve'])) {
                 echo json_encode(['status' => 'error', 'message' => 'Sila lengkapkan semua maklumat dan pastikan status sah.']);
@@ -1237,11 +1245,11 @@ try {
             $target_id = (int)($_POST['id'] ?? 0);
 
             if ($target_id > 0) {
-                $stmt = $db->prepare("SELECT * FROM temp_courses WHERE id = :id AND status = 'Approve'");
+                $stmt = $db->prepare("SELECT * FROM temp_courses WHERE id = :id AND status IN ('Approve', 'Approved')");
                 $stmt->execute(['id' => $target_id]);
                 $items = $stmt->fetchAll();
             } else {
-                $stmt = $db->query("SELECT * FROM temp_courses WHERE status = 'Approve' ORDER BY id ASC");
+                $stmt = $db->query("SELECT * FROM temp_courses WHERE status IN ('Approve', 'Approved') ORDER BY id ASC");
                 $items = $stmt->fetchAll();
             }
 
@@ -1399,6 +1407,7 @@ try {
             requireLogin();
             $id = (int)($_POST['id'] ?? 0);
             $status = trim($_POST['status'] ?? '');
+            if (strcasecmp($status, 'Approved') === 0) $status = 'Approve';
 
             if ($id <= 0 || !in_array($status, ['KIV', 'Approve'])) {
                 echo json_encode(['status' => 'error', 'message' => 'Status tidak sah. Nilai yang sah adalah "KIV" atau "Approve".']);
@@ -1421,6 +1430,7 @@ try {
             $qualification_level = trim($_POST['qualification_level'] ?? 'Diploma');
             $skill_description = trim($_POST['skill_description'] ?? '');
             $status = trim($_POST['status'] ?? 'KIV');
+            if (strcasecmp($status, 'Approved') === 0) $status = 'Approve';
 
             if ($id <= 0 || empty($skill_name) || !in_array($skill_type, ['technical', 'soft']) || !in_array($status, ['KIV', 'Approve'])) {
                 echo json_encode(['status' => 'error', 'message' => 'Sila lengkapkan semua maklumat dan pastikan status sah.']);
@@ -1458,11 +1468,11 @@ try {
             $target_id = (int)($_POST['id'] ?? 0);
 
             if ($target_id > 0) {
-                $stmt = $db->prepare("SELECT * FROM temp_skills WHERE id = :id AND status = 'Approve'");
+                $stmt = $db->prepare("SELECT * FROM temp_skills WHERE id = :id AND status IN ('Approve', 'Approved')");
                 $stmt->execute(['id' => $target_id]);
                 $items = $stmt->fetchAll();
             } else {
-                $stmt = $db->query("SELECT * FROM temp_skills WHERE status = 'Approve' ORDER BY id ASC");
+                $stmt = $db->query("SELECT * FROM temp_skills WHERE status IN ('Approve', 'Approved') ORDER BY id ASC");
                 $items = $stmt->fetchAll();
             }
 

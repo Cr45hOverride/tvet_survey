@@ -403,7 +403,9 @@ $institutes = $db->query("
                 </div>
             </div>
 
-            <div class="stat-card" style="--stat-accent: #f59e0b; --stat-icon-bg: rgba(245, 158, 11, 0.15); cursor: pointer;" onclick="document.querySelector('.admin-tab-btn[data-tab=\'temp_ipt\']').click();">
+            <div class="stat-card"
+                style="--stat-accent: #f59e0b; --stat-icon-bg: rgba(245, 158, 11, 0.15); cursor: pointer;"
+                onclick="document.querySelector('.admin-tab-btn[data-tab=\'temp_ipt\']').click();">
                 <div class="stat-icon"><i class="fa-solid fa-clock-rotate-left"></i></div>
                 <div class="stat-content">
                     <span class="stat-number" id="kpiTotalTempInstitutes">-</span>
@@ -411,7 +413,9 @@ $institutes = $db->query("
                 </div>
             </div>
 
-            <div class="stat-card" style="--stat-accent: #10b981; --stat-icon-bg: rgba(16, 185, 129, 0.15); cursor: pointer;" onclick="document.querySelector('.admin-tab-btn[data-tab=\'temp_kursus\']').click();">
+            <div class="stat-card"
+                style="--stat-accent: #10b981; --stat-icon-bg: rgba(16, 185, 129, 0.15); cursor: pointer;"
+                onclick="document.querySelector('.admin-tab-btn[data-tab=\'temp_kursus\']').click();">
                 <div class="stat-icon"><i class="fa-solid fa-graduation-cap"></i></div>
                 <div class="stat-content">
                     <span class="stat-number" id="kpiTotalTempCourses">-</span>
@@ -419,7 +423,9 @@ $institutes = $db->query("
                 </div>
             </div>
 
-            <div class="stat-card" style="--stat-accent: #a855f7; --stat-icon-bg: rgba(168, 85, 247, 0.15); cursor: pointer;" onclick="document.querySelector('.admin-tab-btn[data-tab=\'temp_skills\']').click();">
+            <div class="stat-card"
+                style="--stat-accent: #a855f7; --stat-icon-bg: rgba(168, 85, 247, 0.15); cursor: pointer;"
+                onclick="document.querySelector('.admin-tab-btn[data-tab=\'temp_skills\']').click();">
                 <div class="stat-icon"><i class="fa-solid fa-brain"></i></div>
                 <div class="stat-content">
                     <span class="stat-number" id="kpiTotalTempSkills">-</span>
@@ -444,15 +450,21 @@ $institutes = $db->query("
             </button>
             <button type="button" class="admin-tab-btn" data-tab="temp_ipt" id="tabBtnTempIpt">
                 <i class="fa-solid fa-clock-rotate-left"></i> 5. Permohonan IPT (Temp)
-                <span id="badgeKivCount" style="display:none; background:#f59e0b; color:#0f172a; font-weight:700; border-radius:9999px; padding:0.12rem 0.45rem; font-size:0.72rem; margin-left:0.35rem;">0 KIV</span>
+                <span id="badgeKivCount"
+                    style="display:none; background:#f59e0b; color:#0f172a; font-weight:700; border-radius:9999px; padding:0.12rem 0.45rem; font-size:0.72rem; margin-left:0.35rem;">0
+                    KIV</span>
             </button>
             <button type="button" class="admin-tab-btn" data-tab="temp_kursus" id="tabBtnTempKursus">
                 <i class="fa-solid fa-graduation-cap"></i> 6. Permohonan Kursus (Temp)
-                <span id="badgeCourseKivCount" style="display:none; background:#10b981; color:#ffffff; font-weight:700; border-radius:9999px; padding:0.12rem 0.45rem; font-size:0.72rem; margin-left:0.35rem;">0 KIV</span>
+                <span id="badgeCourseKivCount"
+                    style="display:none; background:#10b981; color:#ffffff; font-weight:700; border-radius:9999px; padding:0.12rem 0.45rem; font-size:0.72rem; margin-left:0.35rem;">0
+                    KIV</span>
             </button>
             <button type="button" class="admin-tab-btn" data-tab="temp_skills" id="tabBtnTempSkills">
                 <i class="fa-solid fa-brain"></i> 7. Permohonan Kemahiran (Temp)
-                <span id="badgeSkillKivCount" style="display:none; background:#a855f7; color:#ffffff; font-weight:700; border-radius:9999px; padding:0.12rem 0.45rem; font-size:0.72rem; margin-left:0.35rem;">0 KIV</span>
+                <span id="badgeSkillKivCount"
+                    style="display:none; background:#a855f7; color:#ffffff; font-weight:700; border-radius:9999px; padding:0.12rem 0.45rem; font-size:0.72rem; margin-left:0.35rem;">0
+                    KIV</span>
             </button>
         </div>
 
@@ -528,16 +540,22 @@ $institutes = $db->query("
         <!-- ========================================== -->
         <div id="tab-ipt" class="admin-tab-pane">
             <!-- Notice if there are pending Temp Institutes -->
-            <div id="tempInstituteBanner" style="display:none; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:1rem; padding:0.9rem 1.25rem; background:rgba(245, 158, 11, 0.12); border:1px solid rgba(245, 158, 11, 0.35); border-radius:12px; margin-bottom:1.5rem;">
+            <div id="tempInstituteBanner"
+                style="display:none; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:1rem; padding:0.9rem 1.25rem; background:rgba(245, 158, 11, 0.12); border:1px solid rgba(245, 158, 11, 0.35); border-radius:12px; margin-bottom:1.5rem;">
                 <div style="display:flex; align-items:center; gap:0.6rem; color:#fde68a; font-size:0.9rem;">
                     <i class="fa-solid fa-bell" style="color:#fbbf24; font-size:1.1rem;"></i>
-                    <span>Terdapat <strong><span id="bannerKivCount">0</span> permohonan KIV</strong> dan <strong><span id="bannerApproveCount">0</span> sedia Approve</strong> daripada pengguna untuk institusi baharu.</span>
+                    <span>Terdapat <strong><span id="bannerKivCount">0</span> permohonan KIV</strong> dan <strong><span
+                                id="bannerApproveCount">0</span> sedia Approve</strong> daripada pengguna untuk
+                        institusi baharu.</span>
                 </div>
                 <div style="display:flex; gap:0.5rem; align-items:center;">
-                    <button type="button" class="btn-submit" onclick="document.querySelector('.admin-tab-btn[data-tab=\'temp_ipt\']').click();" style="padding:0.4rem 0.9rem; font-size:0.82rem; background:linear-gradient(135deg, #f59e0b, #d97706); border:none;">
+                    <button type="button" class="btn-submit"
+                        onclick="document.querySelector('.admin-tab-btn[data-tab=\'temp_ipt\']').click();"
+                        style="padding:0.4rem 0.9rem; font-size:0.82rem; background:linear-gradient(135deg, #f59e0b, #d97706); border:none;">
                         <i class="fa-solid fa-list-check"></i> Semak di Tab 5
                     </button>
-                    <button type="button" class="btn-submit" onclick="transferApprovedInstitutes();" style="padding:0.4rem 0.9rem; font-size:0.82rem; background:linear-gradient(135deg, #10b981, #059669); border:none;">
+                    <button type="button" class="btn-submit" onclick="transferApprovedInstitutes();"
+                        style="padding:0.4rem 0.9rem; font-size:0.82rem; background:linear-gradient(135deg, #10b981, #059669); border:none;">
                         <i class="fa-solid fa-cloud-arrow-up"></i> Update Institure
                     </button>
                 </div>
@@ -643,16 +661,22 @@ $institutes = $db->query("
         <!-- ========================================== -->
         <div id="tab-kursus" class="admin-tab-pane">
             <!-- Notice if there are pending Temp Courses -->
-            <div id="tempCourseBanner" style="display:none; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:1rem; padding:0.9rem 1.25rem; background:rgba(16, 185, 129, 0.12); border:1px solid rgba(16, 185, 129, 0.35); border-radius:12px; margin-bottom:1.5rem;">
+            <div id="tempCourseBanner"
+                style="display:none; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:1rem; padding:0.9rem 1.25rem; background:rgba(16, 185, 129, 0.12); border:1px solid rgba(16, 185, 129, 0.35); border-radius:12px; margin-bottom:1.5rem;">
                 <div style="display:flex; align-items:center; gap:0.6rem; color:#a7f3d0; font-size:0.9rem;">
                     <i class="fa-solid fa-bell" style="color:#10b981; font-size:1.1rem;"></i>
-                    <span>Terdapat <strong><span id="bannerCourseKivCount">0</span> permohonan KIV</strong> dan <strong><span id="bannerCourseApproveCount">0</span> sedia Approve</strong> daripada pengguna untuk kursus baharu.</span>
+                    <span>Terdapat <strong><span id="bannerCourseKivCount">0</span> permohonan KIV</strong> dan
+                        <strong><span id="bannerCourseApproveCount">0</span> sedia Approve</strong> daripada pengguna
+                        untuk kursus baharu.</span>
                 </div>
                 <div style="display:flex; gap:0.5rem; align-items:center;">
-                    <button type="button" class="btn-submit" onclick="document.querySelector('.admin-tab-btn[data-tab=\'temp_kursus\']').click();" style="padding:0.4rem 0.9rem; font-size:0.82rem; background:linear-gradient(135deg, #059669, #10b981); border:none;">
+                    <button type="button" class="btn-submit"
+                        onclick="document.querySelector('.admin-tab-btn[data-tab=\'temp_kursus\']').click();"
+                        style="padding:0.4rem 0.9rem; font-size:0.82rem; background:linear-gradient(135deg, #059669, #10b981); border:none;">
                         <i class="fa-solid fa-list-check"></i> Semak di Tab 6
                     </button>
-                    <button type="button" class="btn-submit" onclick="transferApprovedCourses();" style="padding:0.4rem 0.9rem; font-size:0.82rem; background:linear-gradient(135deg, #10b981, #059669); border:none;">
+                    <button type="button" class="btn-submit" onclick="transferApprovedCourses();"
+                        style="padding:0.4rem 0.9rem; font-size:0.82rem; background:linear-gradient(135deg, #10b981, #059669); border:none;">
                         <i class="fa-solid fa-cloud-arrow-up"></i> Update Course
                     </button>
                 </div>
@@ -939,15 +963,19 @@ $institutes = $db->query("
         <!-- ======================================================== -->
         <div id="tab-temp_ipt" class="admin-tab-pane">
             <section class="glass-card" style="margin-bottom: 1.5rem; padding: 1.5rem 2rem;">
-                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1.25rem;">
+                <div
+                    style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1.25rem;">
                     <div style="max-width: 750px;">
                         <h3 class="card-title" style="font-size: 1.3rem; margin-bottom: 0.35rem;">
                             <i class="fa-solid fa-clock-rotate-left" style="color: #f59e0b;"></i>
                             Pengurusan Permohonan Institusi (temp_institutes)
                         </h3>
                         <p class="card-subtitle" style="margin-bottom: 0; line-height: 1.5;">
-                            Pengguna biasa memasukkan maklumat institusi baharu ke dalam jadual <code>temp_institutes</code> dengan status lalai <strong>KIV</strong>.
-                            Sebagai pentadbir, anda boleh menyemak permohonan, mengubah status kepada <strong>Approve</strong>, dan menekan butang <strong>Update Institure</strong> untuk memindahkan data ke jadual rasmi <code>institutes</code>.
+                            Pengguna biasa memasukkan maklumat institusi baharu ke dalam jadual
+                            <code>temp_institutes</code> dengan status lalai <strong>KIV</strong>.
+                            Sebagai pentadbir, anda boleh menyemak permohonan, mengubah status kepada
+                            <strong>Approve</strong>, dan menekan butang <strong>Update Institure</strong> untuk
+                            memindahkan data ke jadual rasmi <code>institutes</code>.
                         </p>
                     </div>
 
@@ -963,7 +991,8 @@ $institutes = $db->query("
 
             <!-- Temp Institutes Table Card -->
             <section class="glass-card">
-                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.25rem;">
+                <div
+                    style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.25rem;">
                     <div>
                         <h3 class="card-title" style="margin-bottom: 0.2rem; font-size: 1.25rem;">
                             <i class="fa-solid fa-table-list" style="color: #f59e0b;"></i>
@@ -977,7 +1006,8 @@ $institutes = $db->query("
                     <div class="filter-group">
                         <!-- Filter Status -->
                         <div class="select-wrapper" style="min-width: 150px;">
-                            <select id="filterTempStatus" class="custom-select" style="padding: 0.55rem 2rem 0.55rem 0.8rem; font-size: 0.85rem;">
+                            <select id="filterTempStatus" class="custom-select"
+                                style="padding: 0.55rem 2rem 0.55rem 0.8rem; font-size: 0.85rem;">
                                 <option value="all">-- Semua Status --</option>
                                 <option value="KIV">Status: KIV</option>
                                 <option value="Approve">Status: Approve</option>
@@ -987,7 +1017,8 @@ $institutes = $db->query("
 
                         <!-- Filter State -->
                         <div class="select-wrapper" style="min-width: 180px;">
-                            <select id="filterTempState" class="custom-select" style="padding: 0.55rem 2rem 0.55rem 0.8rem; font-size: 0.85rem;">
+                            <select id="filterTempState" class="custom-select"
+                                style="padding: 0.55rem 2rem 0.55rem 0.8rem; font-size: 0.85rem;">
                                 <option value="0">-- Semua Negeri --</option>
                                 <?php foreach ($states as $st): ?>
                                     <option value="<?php echo $st['id']; ?>">
@@ -1021,7 +1052,8 @@ $institutes = $db->query("
                         <tbody id="tempInstitutesTableBody">
                             <tr>
                                 <td colspan="6" style="text-align: center; color: var(--text-muted); padding: 2rem;">
-                                    <i class="fa-solid fa-spinner fa-spin"></i> Memuatkan senarai permohonan institusi...
+                                    <i class="fa-solid fa-spinner fa-spin"></i> Memuatkan senarai permohonan
+                                    institusi...
                                 </td>
                             </tr>
                         </tbody>
@@ -1035,15 +1067,19 @@ $institutes = $db->query("
         <!-- ======================================================== -->
         <div id="tab-temp_kursus" class="admin-tab-pane">
             <section class="glass-card" style="margin-bottom: 1.5rem; padding: 1.5rem 2rem;">
-                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1.25rem;">
+                <div
+                    style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1.25rem;">
                     <div style="max-width: 750px;">
                         <h3 class="card-title" style="font-size: 1.3rem; margin-bottom: 0.35rem;">
                             <i class="fa-solid fa-graduation-cap" style="color: #10b981;"></i>
                             Pengurusan Permohonan Kursus Ditawarkan (temp_courses)
                         </h3>
                         <p class="card-subtitle" style="margin-bottom: 0; line-height: 1.5;">
-                            Pengguna biasa memasukkan maklumat kursus baharu ke dalam jadual <code>temp_courses</code> dengan status lalai <strong>KIV</strong>.
-                            Sebagai pentadbir, anda boleh menyemak permohonan kursus, mengubah status kepada <strong>Approve</strong>, dan menekan butang <strong>Update Course</strong> untuk memindahkan data ke jadual rasmi <code>courses</code>.
+                            Pengguna biasa memasukkan maklumat kursus baharu ke dalam jadual <code>temp_courses</code>
+                            dengan status lalai <strong>KIV</strong>.
+                            Sebagai pentadbir, anda boleh menyemak permohonan kursus, mengubah status kepada
+                            <strong>Approve</strong>, dan menekan butang <strong>Update Course</strong> untuk
+                            memindahkan data ke jadual rasmi <code>courses</code>.
                         </p>
                     </div>
 
@@ -1059,7 +1095,8 @@ $institutes = $db->query("
 
             <!-- Temp Courses Table Card -->
             <section class="glass-card">
-                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.25rem;">
+                <div
+                    style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.25rem;">
                     <div>
                         <h3 class="card-title" style="margin-bottom: 0.2rem; font-size: 1.25rem;">
                             <i class="fa-solid fa-table-list" style="color: #10b981;"></i>
@@ -1073,7 +1110,8 @@ $institutes = $db->query("
                     <div class="filter-group">
                         <!-- Filter Status -->
                         <div class="select-wrapper" style="min-width: 140px;">
-                            <select id="filterTempCourseStatus" class="custom-select" style="padding: 0.55rem 2rem 0.55rem 0.8rem; font-size: 0.85rem;">
+                            <select id="filterTempCourseStatus" class="custom-select"
+                                style="padding: 0.55rem 2rem 0.55rem 0.8rem; font-size: 0.85rem;">
                                 <option value="all">-- Semua Status --</option>
                                 <option value="KIV">Status: KIV</option>
                                 <option value="Approve">Status: Approve</option>
@@ -1083,7 +1121,8 @@ $institutes = $db->query("
 
                         <!-- Filter State -->
                         <div class="select-wrapper" style="min-width: 160px;">
-                            <select id="filterTempCourseState" class="custom-select" style="padding: 0.55rem 2rem 0.55rem 0.8rem; font-size: 0.85rem;">
+                            <select id="filterTempCourseState" class="custom-select"
+                                style="padding: 0.55rem 2rem 0.55rem 0.8rem; font-size: 0.85rem;">
                                 <option value="0">-- Semua Negeri --</option>
                                 <?php foreach ($states as $st): ?>
                                     <option value="<?php echo $st['id']; ?>">
@@ -1096,10 +1135,12 @@ $institutes = $db->query("
 
                         <!-- Filter Institute -->
                         <div class="select-wrapper" style="min-width: 200px;">
-                            <select id="filterTempCourseInstitute" class="custom-select" style="padding: 0.55rem 2rem 0.55rem 0.8rem; font-size: 0.85rem;">
+                            <select id="filterTempCourseInstitute" class="custom-select"
+                                style="padding: 0.55rem 2rem 0.55rem 0.8rem; font-size: 0.85rem;">
                                 <option value="0">-- Semua Institusi (IPT) --</option>
                                 <?php foreach ($institutes as $inst): ?>
-                                    <option value="<?php echo $inst['id']; ?>" data-state="<?php echo $inst['state_id']; ?>">
+                                    <option value="<?php echo $inst['id']; ?>"
+                                        data-state="<?php echo $inst['state_id']; ?>">
                                         <?php echo htmlspecialchars($inst['institute_name']); ?>
                                     </option>
                                 <?php endforeach; ?>
@@ -1109,7 +1150,8 @@ $institutes = $db->query("
 
                         <!-- Filter Level -->
                         <div class="select-wrapper" style="min-width: 140px;">
-                            <select id="filterTempCourseLevel" class="custom-select" style="padding: 0.55rem 2rem 0.55rem 0.8rem; font-size: 0.85rem;">
+                            <select id="filterTempCourseLevel" class="custom-select"
+                                style="padding: 0.55rem 2rem 0.55rem 0.8rem; font-size: 0.85rem;">
                                 <option value="all">-- Semua Tahap --</option>
                                 <option value="Diploma">Diploma</option>
                                 <option value="Degree">Degree</option>
@@ -1159,21 +1201,25 @@ $institutes = $db->query("
         <!-- ======================================================== -->
         <div id="tab-temp_skills" class="admin-tab-pane">
             <section class="glass-card" style="margin-bottom: 1.5rem; padding: 1.5rem 2rem;">
-                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1.25rem;">
+                <div
+                    style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1.25rem;">
                     <div style="max-width: 750px;">
                         <h3 class="card-title" style="font-size: 1.3rem; margin-bottom: 0.35rem;">
                             <i class="fa-solid fa-brain" style="color: #a855f7;"></i>
                             Pengurusan Permohonan Kemahiran (temp_skills)
                         </h3>
                         <p class="card-subtitle" style="margin-bottom: 0; line-height: 1.5;">
-                            Pengguna biasa memasukkan maklumat kemahiran baharu ke dalam jadual <code>temp_skills</code> dengan status lalai <strong>KIV</strong>.
-                            Pentadbir boleh menyemak, menukar status kepada <strong>Approve</strong>, atau memindahkan semua rekod yang diluluskan terus ke senarai kemahiran rasmi.
+                            Pengguna biasa memasukkan maklumat kemahiran baharu ke dalam jadual <code>temp_skills</code>
+                            dengan status lalai <strong>KIV</strong>.
+                            Pentadbir boleh menyemak, menukar status kepada <strong>Approve</strong>, atau memindahkan
+                            semua rekod yang diluluskan terus ke senarai kemahiran rasmi.
                         </p>
                     </div>
 
                     <!-- Action: Update Skills button -->
                     <div style="display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap;">
-                        <button type="button" class="btn-submit" id="btnUpdateSkill" style="background: linear-gradient(135deg, #a855f7 0%, #7e22ce 100%); padding: 0.7rem 1.4rem; font-size: 0.9rem;">
+                        <button type="button" class="btn-submit" id="btnUpdateSkill"
+                            style="background: linear-gradient(135deg, #a855f7 0%, #7e22ce 100%); padding: 0.7rem 1.4rem; font-size: 0.9rem;">
                             <i class="fa-solid fa-cloud-arrow-up"></i> Update Kemahiran
                         </button>
                     </div>
@@ -1182,7 +1228,8 @@ $institutes = $db->query("
 
             <!-- Table Card for Temp Skills -->
             <section class="glass-card">
-                <div class="card-header" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.25rem;">
+                <div class="card-header"
+                    style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.25rem;">
                     <div>
                         <h3 class="card-title" style="margin-bottom: 0.2rem; font-size: 1.25rem;">
                             <i class="fa-solid fa-table-list" style="color: #a855f7;"></i>
@@ -1193,7 +1240,9 @@ $institutes = $db->query("
                         </p>
                     </div>
                     <div style="display: flex; gap: 0.5rem; align-items: center;">
-                        <span class="badge-step" id="countTempSkillsApproved" style="background: rgba(16, 185, 129, 0.2); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.4);">0 Sedia Dipindahkan</span>
+                        <span class="badge-step" id="countTempSkillsApproved"
+                            style="background: rgba(16, 185, 129, 0.2); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.4);">0
+                            Sedia Dipindahkan</span>
                     </div>
                 </div>
 
@@ -1202,7 +1251,8 @@ $institutes = $db->query("
                     <div class="filter-group">
                         <!-- Status Filter -->
                         <div class="select-wrapper" style="min-width: 150px;">
-                            <select id="filterTempSkillStatus" class="custom-select status-quick-select" style="padding: 0.55rem 2rem 0.55rem 0.85rem !important;">
+                            <select id="filterTempSkillStatus" class="custom-select status-quick-select"
+                                style="padding: 0.55rem 2rem 0.55rem 0.85rem !important;">
                                 <option value="all">Semua Status</option>
                                 <option value="KIV">Status: KIV (Semakan)</option>
                                 <option value="Approve">Status: Approve (Lulus)</option>
@@ -1212,7 +1262,8 @@ $institutes = $db->query("
 
                         <!-- Skill Type Filter -->
                         <div class="select-wrapper" style="min-width: 170px;">
-                            <select id="filterTempSkillType" class="custom-select status-quick-select" style="padding: 0.55rem 2rem 0.55rem 0.85rem !important;">
+                            <select id="filterTempSkillType" class="custom-select status-quick-select"
+                                style="padding: 0.55rem 2rem 0.55rem 0.85rem !important;">
                                 <option value="all">Semua Jenis Kemahiran</option>
                                 <option value="technical">Technical (Teknikal)</option>
                                 <option value="soft">Soft (Insaniah)</option>
@@ -1222,7 +1273,8 @@ $institutes = $db->query("
 
                         <!-- Qualification Level Filter -->
                         <div class="select-wrapper" style="min-width: 170px;">
-                            <select id="filterTempSkillLevel" class="custom-select status-quick-select" style="padding: 0.55rem 2rem 0.55rem 0.85rem !important;">
+                            <select id="filterTempSkillLevel" class="custom-select status-quick-select"
+                                style="padding: 0.55rem 2rem 0.55rem 0.85rem !important;">
                                 <option value="all">Semua Tahap Kelayakan</option>
                                 <option value="SKM">SKM</option>
                                 <option value="SPM">SPM</option>
@@ -1258,7 +1310,8 @@ $institutes = $db->query("
                         <tbody id="tempSkillsTableBody">
                             <tr>
                                 <td colspan="8" style="text-align: center; color: var(--text-muted); padding: 2rem;">
-                                    <i class="fa-solid fa-spinner fa-spin"></i> Memuatkan senarai permohonan kemahiran...
+                                    <i class="fa-solid fa-spinner fa-spin"></i> Memuatkan senarai permohonan
+                                    kemahiran...
                                 </td>
                             </tr>
                         </tbody>
@@ -1452,7 +1505,8 @@ $institutes = $db->query("
                 <div class="modal-title">
                     <i class="fa-solid fa-pen-to-square" style="color: #f59e0b;"></i> Semak / Kemas Kini Permohonan IPT
                 </div>
-                <button type="button" class="modal-close" onclick="closeModal('modalEditTempInstitute')">&times;</button>
+                <button type="button" class="modal-close"
+                    onclick="closeModal('modalEditTempInstitute')">&times;</button>
             </div>
             <form id="editTempInstituteForm">
                 <input type="hidden" id="edit_temp_id" name="id">
@@ -1474,7 +1528,8 @@ $institutes = $db->query("
 
                     <div class="form-group" style="margin-bottom: 1.25rem;">
                         <label class="form-label" for="edit_temp_institute_name">Nama Institusi / IPT</label>
-                        <input type="text" id="edit_temp_institute_name" name="institute_name" class="custom-input" required>
+                        <input type="text" id="edit_temp_institute_name" name="institute_name" class="custom-input"
+                            required>
                     </div>
 
                     <div class="form-group" style="margin-bottom: 1rem;">
@@ -1489,7 +1544,8 @@ $institutes = $db->query("
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn-secondary" onclick="closeModal('modalEditTempInstitute')">Batal</button>
+                    <button type="button" class="btn-secondary"
+                        onclick="closeModal('modalEditTempInstitute')">Batal</button>
                     <button type="submit" class="btn-submit" style="padding: 0.6rem 1.4rem;">
                         <i class="fa-solid fa-save"></i> Simpan Perubahan
                     </button>
@@ -1505,7 +1561,8 @@ $institutes = $db->query("
         <div class="modal-card" style="max-width: 600px;">
             <div class="modal-header">
                 <div class="modal-title">
-                    <i class="fa-solid fa-pen-to-square" style="color: #10b981;"></i> Semak / Kemas Kini Permohonan Kursus
+                    <i class="fa-solid fa-pen-to-square" style="color: #10b981;"></i> Semak / Kemas Kini Permohonan
+                    Kursus
                 </div>
                 <button type="button" class="modal-close" onclick="closeModal('modalEditTempCourse')">&times;</button>
             </div>
@@ -1515,7 +1572,8 @@ $institutes = $db->query("
                     <div class="form-group" style="margin-bottom: 1.25rem;">
                         <label class="form-label" for="edit_temp_course_institute_id">Institusi (IPT)</label>
                         <div class="select-wrapper">
-                            <select id="edit_temp_course_institute_id" name="institute_id" class="custom-select" required>
+                            <select id="edit_temp_course_institute_id" name="institute_id" class="custom-select"
+                                required>
                                 <option value="">-- Pilih Institusi --</option>
                                 <?php foreach ($institutes as $inst): ?>
                                     <option value="<?php echo $inst['id']; ?>">
@@ -1536,7 +1594,8 @@ $institutes = $db->query("
                         <div class="form-group">
                             <label class="form-label" for="edit_temp_course_qualification_level">Tahap Pengajian</label>
                             <div class="select-wrapper">
-                                <select id="edit_temp_course_qualification_level" name="qualification_level" class="custom-select" required>
+                                <select id="edit_temp_course_qualification_level" name="qualification_level"
+                                    class="custom-select" required>
                                     <option value="Diploma">Diploma</option>
                                     <option value="Degree">Degree / Sarjana Muda</option>
                                     <option value="Certificate">Certificate / Sijil</option>
@@ -1549,7 +1608,8 @@ $institutes = $db->query("
 
                         <div class="form-group">
                             <label class="form-label" for="edit_temp_course_campus_branch">Kampus / Cawangan</label>
-                            <input type="text" id="edit_temp_course_campus_branch" name="campus_branch" class="custom-input" required>
+                            <input type="text" id="edit_temp_course_campus_branch" name="campus_branch"
+                                class="custom-input" required>
                         </div>
                     </div>
 
@@ -1565,7 +1625,8 @@ $institutes = $db->query("
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn-secondary" onclick="closeModal('modalEditTempCourse')">Batal</button>
+                    <button type="button" class="btn-secondary"
+                        onclick="closeModal('modalEditTempCourse')">Batal</button>
                     <button type="submit" class="btn-submit" style="padding: 0.6rem 1.4rem;">
                         <i class="fa-solid fa-save"></i> Simpan Perubahan
                     </button>
@@ -1581,7 +1642,8 @@ $institutes = $db->query("
         <div class="modal-card" style="max-width: 600px;">
             <div class="modal-header">
                 <div class="modal-title">
-                    <i class="fa-solid fa-pen-to-square" style="color: #a855f7;"></i> Semak / Kemas Kini Permohonan Kemahiran
+                    <i class="fa-solid fa-pen-to-square" style="color: #a855f7;"></i> Semak / Kemas Kini Permohonan
+                    Kemahiran
                 </div>
                 <button type="button" class="modal-close" onclick="closeModal('modalEditTempSkill')">&times;</button>
             </div>
@@ -1608,7 +1670,8 @@ $institutes = $db->query("
                         <div class="form-group">
                             <label class="form-label" for="edit_temp_skill_qualification">Tahap Pengajian</label>
                             <div class="select-wrapper">
-                                <select id="edit_temp_skill_qualification" name="qualification_level" class="custom-select" required>
+                                <select id="edit_temp_skill_qualification" name="qualification_level"
+                                    class="custom-select" required>
                                     <option value="SKM">SKM</option>
                                     <option value="SPM">SPM</option>
                                     <option value="Diploma">Diploma</option>
@@ -1622,7 +1685,8 @@ $institutes = $db->query("
 
                     <div class="form-group" style="margin-bottom: 1.25rem;">
                         <label class="form-label" for="edit_temp_skill_description">Keterangan (Pilihan)</label>
-                        <textarea id="edit_temp_skill_description" name="skill_description" class="custom-input" rows="3"></textarea>
+                        <textarea id="edit_temp_skill_description" name="skill_description" class="custom-input"
+                            rows="3"></textarea>
                     </div>
 
                     <div class="form-group" style="margin-bottom: 0.5rem;">
@@ -1637,8 +1701,10 @@ $institutes = $db->query("
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn-secondary" onclick="closeModal('modalEditTempSkill')">Batal</button>
-                    <button type="submit" class="btn-submit" style="background: linear-gradient(135deg, #a855f7 0%, #7e22ce 100%); padding: 0.6rem 1.4rem;">
+                    <button type="button" class="btn-secondary"
+                        onclick="closeModal('modalEditTempSkill')">Batal</button>
+                    <button type="submit" class="btn-submit"
+                        style="background: linear-gradient(135deg, #a855f7 0%, #7e22ce 100%); padding: 0.6rem 1.4rem;">
                         <i class="fa-solid fa-save"></i> Simpan Perubahan
                     </button>
                 </div>
@@ -2064,9 +2130,9 @@ $institutes = $db->query("
                     </td>
                     <td style="text-align:center;">
                         ${st.total_submissions > 0
-                    ? `<span style="color:#38bdf8; font-weight:700;"><i class="fa-solid fa-users"></i> ${st.total_submissions} Responden</span>`
-                    : '<span style="color:var(--text-muted);">0</span>'
-                }
+                        ? `<span style="color:#38bdf8; font-weight:700;"><i class="fa-solid fa-users"></i> ${st.total_submissions} Responden</span>`
+                        : '<span style="color:var(--text-muted);">0</span>'
+                    }
                     </td>
                     <td style="text-align:center;">
                         ${statusBadge}
@@ -2166,9 +2232,9 @@ $institutes = $db->query("
                     </td>
                     <td style="text-align:center;">
                         ${ipt.total_submissions > 0
-                    ? `<span style="color:#38bdf8; font-weight:700;"><i class="fa-solid fa-users"></i> ${ipt.total_submissions}</span>`
-                    : '<span style="color:var(--text-muted);">0</span>'
-                }
+                        ? `<span style="color:#38bdf8; font-weight:700;"><i class="fa-solid fa-users"></i> ${ipt.total_submissions}</span>`
+                        : '<span style="color:var(--text-muted);">0</span>'
+                    }
                     </td>
                     <td style="text-align:center;">
                         ${statusBadge}
@@ -2312,8 +2378,7 @@ $institutes = $db->query("
 
             tbody.innerHTML = pageData.map((c, idx) => {
                 const rowNum = startIndex + idx + 1;
-                const levelClass = (c.qualification_level || '').toLowerCase().includes('degree') ? 'degree'
-                    : ((c.qualification_level || '').toLowerCase().includes('diploma') ? 'diploma' : 'certificate');
+                const levelClass = getLevelBadgeClass(c.qualification_level);
 
                 const isEnable = (c.status || 'enable') === 'enable';
                 const statusBadge = isEnable
@@ -2560,7 +2625,8 @@ $institutes = $db->query("
             document.getElementById('edit_temp_id').value = id;
             document.getElementById('edit_temp_state_id').value = stateId;
             document.getElementById('edit_temp_institute_name').value = name;
-            document.getElementById('edit_temp_status').value = status;
+            const normStatus = (status && status.toLowerCase() === 'approved') ? 'Approve' : (status || 'KIV');
+            document.getElementById('edit_temp_status').value = normStatus;
             openModal('modalEditTempInstitute');
         }
 
@@ -2652,6 +2718,13 @@ $institutes = $db->query("
                     (item.campus_branch && item.campus_branch.toLowerCase().includes(search));
             });
             renderTempCoursesTable(filtered);
+        }
+
+        function getLevelBadgeClass(level) {
+            const l = (level || '').toLowerCase();
+            if (l.includes('degree') || l.includes('sarjana muda') || l.includes('ijazah')) return 'degree';
+            if (l.includes('diploma')) return 'diploma';
+            return 'certificate';
         }
 
         function renderTempCoursesTable(list) {
@@ -2779,7 +2852,8 @@ $institutes = $db->query("
             document.getElementById('edit_temp_course_name').value = name;
             document.getElementById('edit_temp_course_qualification_level').value = level || 'Diploma';
             document.getElementById('edit_temp_course_campus_branch').value = branch || 'Kampus Utama';
-            document.getElementById('edit_temp_course_status').value = status;
+            const normStatus = (status && status.toLowerCase() === 'approved') ? 'Approve' : (status || 'KIV');
+            document.getElementById('edit_temp_course_status').value = normStatus;
             openModal('modalEditTempCourse');
         }
 
@@ -2972,7 +3046,8 @@ $institutes = $db->query("
             document.getElementById('edit_temp_skill_type').value = type;
             document.getElementById('edit_temp_skill_qualification').value = qual || 'Diploma';
             document.getElementById('edit_temp_skill_description').value = desc || '';
-            document.getElementById('edit_temp_skill_status').value = status;
+            const normStatus = (status && status.toLowerCase() === 'approved') ? 'Approve' : (status || 'KIV');
+            document.getElementById('edit_temp_skill_status').value = normStatus;
             openModal('modalEditTempSkill');
         }
 
